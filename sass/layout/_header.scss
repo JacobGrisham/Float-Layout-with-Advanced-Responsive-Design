@@ -1,0 +1,62 @@
+.header {
+  height: 95vh;
+  // 95vh means that we are setting the header height at 95% of the viewport height //
+  background-image: linear-gradient(
+    to right bottom, 
+    rgba($color-primary-light, .8),
+    rgba($color-primary-dark, .8)),
+    url(../img/hero-small.jpg);
+  // we use .. to get us out of the css folder and then we specify that we want to reference the img folder and then we specify which file we want. We use the small hero image as the baseline and use the media query @media(min-resolution) to choose the full size hero image for those screens that can make use of it //
+  background-size: cover;
+  // whatever the size of the viewport or the element, it will always attempt to cover it//
+  background-position: top;
+  // This anchors the top of the image so that the bottom gets cut when the screen re-sizes smaller //
+  position: relative;
+  // setting potision to relative because header is the parent element to logo-box //
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+   // The webkit property is to allow functionality in other browsers. It's important to put this one first before the offical line below //
+  clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+  // specifies polygon in which image will still be visible //
+
+  @media only screen and (min-resolution: 192dpi) and (min-width: 37.5em),
+        only screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 37.5em),
+        only screen and (min-width: 125em) {
+    background-image: linear-gradient(
+    to right bottom, 
+    rgba($color-primary, .8),
+    rgba($color-primary, .8)),
+    url(../img/hero.jpg);
+  }
+  // dpi = dots per inch. We set dpi to 192 because it is equivalent to Apple's retina screen, which is a high resolution screen. Whenever the dpi is greater than 192 and the minimum width of greater than 600px, the code above will apply. We use 600px (or 37.5em) as the breakpoint because that is the often the screen width of phones that often have high resolution. We use 2000px (or 125em) as the second breakpoint because the high resolution image is only worth it on a big screen. Note that the comma between the first selector and the second selector acts as an OR. //
+
+  @include respond(phone) {
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%);
+  }
+
+  &__logo-box {
+    position: absolute;
+    top: 4rem;
+    left: 4rem;
+  }
+
+// The following code allows animations to occur at specific instances instead of at page load //
+// .logo:hover { //
+  // animation: moveInRight 1.5s ease-in-out; //
+// } //
+
+  &__logo {
+    height: 3.5rem;
+    // width will be automatically scaled by browser. You can also define the width and let the browser scale the height //
+  }
+
+  &__textBox{
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    // If we just leave it like this, the upper left hand corner of the box will be centered. However, we want the center of the box to be centered //
+    transform: translate(-50%, -50%);
+    text-align: center;
+    // this centers the button //
+  }
+}

@@ -1,0 +1,116 @@
+// In the code below, :link is a pseudoclass. They are a special state of the selector, which is .btn in this case //
+
+.btn {
+  &,
+  &:link,
+  &:visited {
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 1.5rem 4rem;
+  // padding notation options: write out all four sides, write out x and y, write only one value that will be distributed equally//
+  display: inline-block;
+  // the button is currently inline-text and we want to change it to an inline-block//
+  border-radius: 10rem;
+  // this makes the button rounded //
+  transition: all .2s;
+  // by specifying all, every property that is able to undergo a transition will do so. Transition state is always specified in the inital state //
+  position: relative;
+  // Since we defined the pseudo element as an absolute positino, it will position itself to the first relative element that it can find//
+  font-size: $author-default-font-size;
+  // Note that the author delcared value for the html element is 10px. We're changing the font-size to 16px here so that the text isn't so small //
+  border: none;
+  cursor: pointer;
+  // These last two properties are put here for the button in the Booking Section //
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: $shadow-far;
+    // for box shadow, the first value in the sequence is the X offset, second is Y offset, third is the blur //
+    &::after {
+      transform: scaleX(1.4) scaleY(1.6);
+      opacity: 0;
+    }
+    // this creates the dissapearing halo effect after a user hovers over the button. X and Y were scaled separately because by simply using scale() it looked uneven //
+  }
+  
+  &:active,
+  &:focus {
+    // We add the selector btn:focus to this section otherwise the button in the Booking section has a blue box outline. By putting it here, we're saying that the focus state will look the same as the active state. We don't simply delete the focus state due to accessibility reasons //
+    outline: none;
+    transform: translateY(-1px);
+    box-shadow: $shadow-near;
+    // blur is decreased to 10px and opacity is decreased to 0.5 to mimic an object that is brought closer to the page //
+  }
+  // :active is when the button is clicked //
+  
+  &--white {
+    background-color: $color-white;
+    color: $color-grey-dark;
+
+    &::after{
+      background-color: $color-white;
+      color: $color-grey-dark;
+    }
+  }
+
+  &--green {
+    background-color: $color-primary;
+    color: $color-white;
+
+    &::after{
+      background-color: $color-primary;
+      color: $color-white;
+    }
+  }
+  
+  &::after {
+    content: "";
+    display: inline-block;
+    // for an after pseudo element to first appear on the page, you must define the content and display properties, even if they are empty//
+    height: 100%;
+    width: 100%;
+    // we define this pseudo element as 100% because it is modeled after the .btn element. Moreover, we want to create a replica of this element, thus we use 100% and a border radius of 100px //
+    border-radius: 10rem;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    // we define the position, top, and bottom in order to hide this pseudo element behind the original element //
+    z-index: -1;
+    // the z-index is the like the z axis that comes out from the page and into the screen. By giving a value of -1, it is behind //
+    transition: all 0.5s;
+  }
+  
+  &--animated {
+    animation: moveUp 1.5s ease-out 0.5s;
+    animation-fill-mode: backwards;
+    // animation-fill backwards automatically applies the animations settings before they start //
+  }
+}
+
+.btn-text {
+  &:link,
+  &:visited {
+    font-size: $author-default-font-size;
+    color: $color-primary;
+    display: inline-block;
+    text-decoration: none;
+    border-bottom: 1px solid $color-primary;
+    border-radius: 0;
+    padding: 3px;
+    transition: all .2s;
+  }
+
+  &:hover{
+    background-color: $color-primary;
+    color: $color-white;
+    transform: translateY(-2px);
+    box-shadow: 0 1rem 2rem rgba($color-black, .2);
+  }
+
+  &:active{
+    transform: translateY(-1px);
+    box-shadow: 0 .5rem 1rem rgba($color-black, .5);
+  }
+}

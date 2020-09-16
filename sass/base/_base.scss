@@ -1,0 +1,42 @@
+//  *{} is a universal selector that normalizes the CSS across all pages so that they're standardized //
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+  //box-sizing: border-box changes the box model so that margin and padding is not added //
+}
+// We don't need to delcare *::after and *::before, but it's better practice to do so in case we decide to alter padding or margin for these pseudo-element. //
+
+html {
+  font-size: 62.5%; 
+  // Want 10px as font-size, therefore 10px/16px = 62.5%. We use 10px because it's convenient for math. Furthermore, this defines what 1rem is. 1rem = 10px //
+
+  @include respond(tablet-landscape) { // Recall that this asks, "Is width < 1200?" //
+    font-size: 56.25%; // Want 1rem = 9px, therefore 9/16 = 56.25% //
+  }
+  @include respond(tablet-portrait) { // Recall that this asks, "Is width < 900?" //
+    font-size: 50%; // Want 1rem = 8px, therefore 8/16 = 50% //
+  }
+  // Recall that media queries don't add importance or specifities, therefore the order of the code matters. //
+  @include respond(big-desktop) { // Recall that this asks, "Is width > than 1800?" //
+    font-size: 75%; // Want 1rem = 12px, therefore 12/16 = 75% //
+  }
+}
+
+body {
+  box-sizing: border-box;
+  // It's better practice to put box-sizing: border-box here and to delcare it as inherit under *. It's more maintainable //
+  padding: 3rem;
+  // padding in the body gives a border all along the body of the webpage //
+  @include respond(tablet-portrait) {
+    padding: 0;
+  }
+}
+
+::selection {
+  background-color: $color-primary;
+  color: $color-white;
+}
+// Whenever the user selects text, the above properties will apply. It's a nice personal touch //

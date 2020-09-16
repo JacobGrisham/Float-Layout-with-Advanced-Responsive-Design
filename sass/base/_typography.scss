@@ -1,0 +1,87 @@
+// Note that this code could've been oraginized under a different file, such as the components folder. It's pretty subjective. What matters is that it's organized //
+
+body {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  // font-size: 16px; //
+  line-height: 1.7;
+  color: $color-grey-dark;
+  // Put font-family, etc. in the body because it's more efficient than putting it in the universal selector //
+}
+
+.primaryHeading {
+  color: $color-white;
+  text-transform: uppercase;
+  backface-visibility: hidden;
+  // backface-visibility: hidden helps to elimiate the slight shake when the animation occurs //
+  margin-bottom: 6rem;
+
+  &--main {
+    display: block;
+    font-size: 6rem;
+    font-weight: 400;
+    letter-spacing: 3.5rem;
+    animation-name: moveInLeft;
+    animation-duration: 1.5s;
+    animation-timing-function: ease-in-out;
+    // animation-delay: 3s; this causes a delay in the animation by the specified time animation-iteration-count: 3; sets the frequency of the animation //
+
+    @include respond(phone) {
+      letter-spacing: 1.5rem;
+    }
+  }
+  
+  &--subtext {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 1.75rem;
+    animation: moveInRight 1.5s ease-in-out;
+    // animation is just the shorthand property instead of writing out all the properties seperately//
+
+    @include respond(phone) {
+      letter-spacing: .5rem;
+    }
+  }
+}
+
+.heading-secondary {
+  font-size: 3.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: .2rem;
+  display: inline-block;
+  // This crops the background image to the width of the text. It should be noted that when I delete this from the code, it works just fine... //
+  background-image: linear-gradient(to right, $color-primary-light, $color-primary-dark);
+  -webkit-background-clip: text;
+  // This clips the background image to only where the text is //
+  color: transparent;
+  // We need to set the color as transparent in order for the background color to show. Note that I got it to work with rgba (0,0,0,0); //
+  transition: all .2s;
+
+  @include respond(tablet-portrait) {
+    font-size: 3rem;
+  }
+  @include respond(phone) {
+    font-size: 2.5rem;
+  }
+
+  &:hover {
+    transform: skewY(2deg) skewX(15deg) scale(1.1);
+    text-shadow: .5rem 1rem 2rem rgba($color-black, .2);
+    // offset X, offset Y, blur radius, color //
+  }
+}
+
+.heading-tertiary{
+  font-size: $author-default-font-size;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.paragraph {
+  font-size: $author-default-font-size;
+  &:not(:last-child){
+    margin-bottom: 3rem;
+  }
+}

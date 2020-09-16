@@ -1,0 +1,87 @@
+.story {
+  width: 75%;
+  margin: 0 auto;
+  // We can use this because it is an element inside a block element //
+  box-shadow: $shadow-far;
+  background-color: rgba($color-white, .6);
+  border-radius: $subtle-rounded-corner;
+  padding: 6rem;
+  padding-left: 9rem;
+  // We add some padding because the transform:translate on story__shape takes up space //
+  font-size: $author-default-font-size;
+  transform: skewX(-12deg);
+
+  @include respond(tablet-portrait){
+    width: 100%;
+    padding: 4rem;
+    padding-left: 7rem;
+  }
+
+  @include respond(phone){
+    transform: none;
+  }
+
+  &__shape {
+    width: 15rem;
+    height: 15rem;
+    float: left;
+    -webkit-shape-outside: circle(50% at 50% 50%);
+    shape-outside: circle(50% at 50% 50%);
+    // defines where the content flows around the element. In this case a cicrle //
+    -webkit-shape-outside: circle(50% at 50% 50%);
+    clip-path: circle(50% at 50% 50%);
+    // This makes the element a circle //
+    transform: translateX(-3rem) skewX(12deg);
+    // This moves the circle //
+    position: relative;
+
+    @include respond(phone){
+      transform: translateX(-1rem) skewX(0);
+    }
+  }
+
+  &__image {
+    height: 100%;
+    transform: translateX(-4rem) scale(1.4);
+    // Used to center the image and to set the inital scale //
+    backface-visibility: hidden;
+    // Just used as a hack to stop weird behavior //
+  }
+
+  &__text {
+    transform: skewX(12deg);
+
+    @include respond(phone){
+      transform: none;
+    }
+  }
+
+  &__caption {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    color: $color-white;
+    text-transform: uppercase;
+    font-size: 1.7rem;
+    text-align: center;
+    opacity: 0;
+    // Used to hide the text behind the image initially //
+    transition: all .8s ease;
+    backface-visibility: hidden;
+    // Just used as a hack to stop weird behavior //
+  }
+
+  &:hover &__caption {
+    opacity: 1;
+    // Used to show the text when hovering //
+    transform: translate(-50%, -20%);
+  }
+
+  &:hover &__image {
+    transform: translate(-4rem) scale(1);
+    // Used to move the caption up and to zoom out of the image //
+    filter: blur(3px) brightness(80%);
+  }
+
+}

@@ -1,0 +1,67 @@
+.row {
+  max-width: $grid-width;
+  // It's important to use max-width and not just width because the former will use 100% of the available viewport space if that space is less than 114rem. Also we use 114rem because it's bad practice to use px. Note that 1140px is the standard max-width. Therefore to get 1140px, we divide our by defined font-size by 10. //
+  margin: 0 auto;
+  // This is the trick to center block elements inside another block element //
+
+  &:not(:last-child){
+    margin-bottom: $row-margin-bottom;
+
+    @include respond(tablet-portrait) {
+      margin-bottom: $row-margin-bottom-small;
+    }
+  }
+  // In order for the last row to not have an unneccessary margin on the bottom, we use the code above. Use the :not pseudo-selector and the :last-child pseudo-class. If we were to just use the :last-child pseudo-class, it would select the last row. This code selects everything except the last row. //
+
+  @include respond(tablet-portrait) {
+    max-width: 50rem;
+    padding: 0 3rem;
+  }
+
+  @include clearfix;
+  // See note in _mixins.scss //
+
+  [class^=col-]{
+    float: left;
+
+    &:not(:last-child){
+      margin-right: $row-margin-side;
+
+      @include respond(tablet-portrait) {
+        margin-right: 0;
+        margin-bottom: $row-margin-bottom-small;
+      }
+    }
+
+    @include respond(tablet-portrait) {
+      width: 100% !important;
+    }
+
+  }
+  // [class^=col-] is an attribute selector. The attribute we defined was class. Note that the symbol ^= means that we want the beginning to be equal to (whatever you want). Note that you can use $= for something that you want the end to be equal to. We use this to avoid repeating the code inside.
+
+  .col-1-of-2 {
+    width: calc((100% - #{$row-margin-side}) / 2);
+    // Here we are setting the width of the individual columns. We want the individual columns to be half the grid-width minus the vertical margin. To achieve this, we use the calc function. In calc, we can mix units (rem, %, px). Note that to use a variable in this function, we must put the variable in #{}.
+  }
+
+  .col-1-of-3 {
+    width: calc((100% - (#{$row-margin-side}) * 2) / 3);
+  }
+
+  .col-1-of-4 {
+    width: calc((100% - (#{$row-margin-side}) * 3) / 4);
+  }
+
+  .col-2-of-3 {
+    width: calc(2 * ((100% - (#{$row-margin-side}) * 2) / 3) + #{$row-margin-side});
+  }
+
+  .col-2-of-4 {
+    width: calc(2 * ((100% - (#{$row-margin-side}) * 3) / 4) + #{$row-margin-side});
+  }
+
+  .col-3-of-4 {
+    width: calc(3 * ((100% - (#{$row-margin-side}) * 3) / 4) + (2 * #{$row-margin-side}));
+  }
+}

@@ -1,0 +1,112 @@
+.form {
+  &__group:not(:last-child) {
+    margin-bottom: 2rem;
+  }
+
+  &__input {
+    font-size: 1.6rem;
+    font-family: inherit;
+    // Forms don't usually inherit, so we have to manualy change it. Changing font family to Lato. More DRY to use the declaration "inherit" //
+    color: inherit;
+    // Again, changing color to inherit //
+    padding: 1.5rem 2rem;
+    border-radius: $subtle-rounded-corner;
+    background-color: rgba($color-white, .5);
+    border: none;
+    border-bottom: 3px solid transparent;
+    // We declare the border-bottom and set the value to transparent so that the input field doesn't move when we click on it //
+    width: 90%;
+    display: block;
+    transition: all .3s;
+    // The transition creates a delay for the red underline //
+
+    @include respond(tablet-portrait){
+      width: 100%;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: $shadow-near;
+      border-bottom: 3px solid $color-primary;
+      // It's important for accessibility to add a box-shadow and border-bottom so that users who navigate only with keyboard can see where thier cursor is //
+    }
+    
+    &:focus:invalid{
+      border-bottom: 3px solid $color-secondary-light-2;
+      // This takes advantage of chrome. When the input field is invalid, the border bottom will be orange //
+    }
+
+    &::-webkit-input-placeholder {
+      color: $color-grey-darker;
+    }
+  }
+
+  &__label {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-left: 2rem;
+    margin-top: .7rem;
+    display: block;
+    transition: all .3s;
+  }
+
+  &__input:placeholder-shown + &__label {
+    // Note thet the classes input and label are both children to the form class. Therefore they are considered siblings. The "+" in the selector above is the adjacent sibling selector. If the siblings are not right after one another, you must use the general subling selector, which is "~". See HTML for more comments about order of writing the classes //
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4rem);
+    // This section of code here creates the effect of the placeholder moving down once you start typing into the input box //
+  }
+
+  &__radio-group {
+    width: 49%;
+    display: inline-block;
+
+    @include respond(tablet-portrait){
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+  }
+
+  &__radio-input {
+    display: none;
+  }
+
+  &__radio-label {
+    font-size: 1.4rem;
+    cursor: pointer;
+    // This will make the text look like a link by showing the hand instead of the arrow //
+    position: relative;
+    padding-left: 3rem;
+  }
+
+  // CREATING RADIO BUTTON //
+  &__radio-button {
+    height: 3rem;
+    width: 3rem;
+    border: 3px solid $color-primary;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: -.4rem;
+
+    &::after {
+      content: "";
+      display: block;
+      // Note that anytime we use a pseudo-element, we need to set the content to "" and the display to block //
+      height: 1.4rem;
+      width: 1.4rem;
+      border-radius: 50%;
+      @include center;
+      background-color: $color-primary;
+      opacity: 0;
+      transition: opacity .2s;
+    }
+  }
+
+  &__radio__input:checked ~ &__radio-label &__radio-button::after {
+    opacity: 1;
+    // This enables the radio button to be filled in after it is checked. So in order to achieve this, we first want the selector to only work on the radio input when it's checked. Next, we select the sibling radio-label and then the child radio-button. But for the radio-button we only want this feature after it's been clicked //
+  }
+}

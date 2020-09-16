@@ -1,0 +1,184 @@
+.navigation {
+  &__checkbox {
+    display: none;
+  }
+
+  &__background {
+    height: 6rem;
+    width: 6rem;
+    border-radius: 50%;
+    position: fixed;
+    // the declaration value "fixed" is similar to "absolute", however it remains in the same spot even when scrolling through the page //
+    top: 6.5rem;
+    right: 6.5rem;
+    background-image: radial-gradient($color-primary-light, $color-primary-dark);
+    z-index: 1000;
+    // 1000 is arbitrary, as long as it's a big number //
+    transition: transform .8s cubic-bezier(.86, 0, .07, 1);
+    // Refer to easing functions cheat sheet online for numbers //
+
+    @include respond(tablet-portrait) {
+      height: 4rem;
+      width: 4rem;
+      top: 4.5rem;
+      right: 4.5rem;
+    }
+
+    @include respond(phone) {
+      top: 3rem;
+      right: 3rem;
+    }
+  }
+
+  &__button {
+    background-color: $color-white;
+    height: 7rem;
+    width: 7rem;
+    border-radius: 50%;
+    position: fixed;
+    top: 6rem;
+    right: 6rem;
+    // The height, width, top, and right were all declared to to ensure that it covers the green background //
+    z-index: 2000;
+    // 1000 is arbitrary, as long as it's more than .navigation__background //
+    box-shadow: $shadow-far;
+    text-align: center;
+    // This is to center the hamburger icon //
+    cursor: pointer;
+
+    @include respond(tablet-portrait) {
+      height: 5rem;
+      width: 5rem;
+      top: 4rem;
+      right: 4rem;
+    }
+
+    @include respond(phone) {
+      top: 2.5rem;
+      right: 2.5rem;
+    }
+
+  }
+
+  &__nav {
+    height: 100vh;
+    position: fixed;
+    // Keep the position fixed so that even if you scroll, the navigation won't move //
+    top: 0;
+    left: 0;
+    // Note that we could've used right: 0 and it would've been the same result since we're using 100% of the width //
+    z-index: 1500;
+    // This declared value just needs to be between &__background and &__button //
+    opacity: 0;
+    width: 0%;
+    // These two properties are used to hide the navigation links //
+    transition: all .8s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  }
+
+  &__list {
+    @include center;
+    list-style: none;
+    text-align: center;
+    width: 100%;
+  }
+
+  &__item {
+    margin: 1rem;
+    }
+
+  &__link {
+    &:link,
+    &:visited {
+    display: inline-block;
+    font-size: 3rem;
+    font-weight: 300;
+    padding: 1rem 2rem;
+    color: $color-white;
+    text-decoration: none;
+    text-transform: uppercase;
+    background-image: linear-gradient(120deg, transparent 0%, transparent 50%, $color-white 50%);
+    background-size: 220%;
+  }
+
+    &:hover,
+    &:active {
+      background-position: 100%;
+      color: $color-primary;
+      translate: transformX(1rem);
+    }
+  }
+
+  // FUNCTIONALITY //
+  &__checkbox:checked ~ &__background {
+    transform: scale(80);
+  }
+
+  &__checkbox:checked ~ &__nav {
+    opacity: 1;
+    width: 100%;
+  }
+
+  // ICON //
+  &__icon {
+    position: relative;
+    margin-top: 3.5rem;
+
+    @include respond(tablet-portrait) {
+      margin-top: 2.5rem;
+    }
+
+    &,
+    &::before,
+    &::after {
+      width: 3rem;
+      height: 2px;
+      background-color: $color-grey-darkest;
+      display: inline-block;
+
+      @include respond(tablet-portrait) {
+        width: 2rem;
+        height: 1px;
+      }
+    }
+  
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      transition: all .2s;
+    }
+
+    &::before {top: -.8rem;}
+    &::after {top: .8rem;}
+    // This positions the buns of the hamburger //
+  }
+
+  &__button:hover &__icon::before {
+    top: -1rem;
+  }
+  // This is to animate the line moving up when hovering //
+
+  &__button:hover &__icon::after {
+    top: 1rem;
+  }
+  // This is to animate the line moving down when hovering //
+  
+  &__checkbox:checked + &__button &__icon {
+    background-color: transparent;
+  }
+  // This makes the burger patty dissapear //
+
+  &__checkbox:checked + &__button &__icon::before {
+    top: 0;
+    transform: rotate(135deg);
+  }
+  // This makes the buns cross //
+
+  &__checkbox:checked + &__button &__icon::after {
+    top: 0;
+    transform: rotate(-135deg);
+  }
+  // This makes the buns cross //
+}

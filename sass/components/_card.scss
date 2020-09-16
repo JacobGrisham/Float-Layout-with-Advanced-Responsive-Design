@@ -1,0 +1,224 @@
+.card {
+
+  // FUNCTIONALITY //
+  perspective: 150rem;
+  // This value is prettyb arbitrary. Just play around with it until you get what you want //
+  -moz-perspective: 150rem;
+  // We have to use this property in order for the flipping effect to work in mozilla firefox //
+  position: relative;
+  height: 50rem;
+  // We have to define the height as the same as the card__side in order for the perspective to work //
+
+  &__side {
+    color: $color-black;
+    font-size: 2rem;
+    height: 50rem;
+    transition: all .8s ease;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: $subtle-rounded-corner;
+    overflow: hidden;
+    // This brings back the rounded corners of the cards since the images create 90deg corners due to overflow //
+    box-shadow: $shadow-far;
+
+    &--front {
+      background-color: $color-white;
+    }
+
+    &--back {
+      transform: rotateY(180deg);
+
+      &-1 {
+        background-image: linear-gradient(to right bottom, $color-secondary-light-1, $color-secondary-light-2);
+      }
+      &-2 {
+        background-image: linear-gradient(to right bottom, $color-primary-light, $color-primary-dark);
+      }
+      &-3 {
+        background-image: linear-gradient(to right bottom, $color-tertiary-light-1, $color-tertiary-light-2);
+      }
+    }
+  }
+  
+  &:hover &__side--front {
+    transform: rotateY(-180deg);
+  }
+
+  &:hover &__side--back {
+    transform: rotateY(0deg);
+  }
+
+  // FRONT SIDE STYLING //
+  &__picture {
+    background-size: cover;
+    height: 23rem;
+    background-blend-mode: screen;
+    // This property is used to blend the gradient and the background image. This property doesn't work on internet explorer or microsoft edge. Only Safari, Firefox, and Chrome. //
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+    // The webkit property is to allow functionality in other browsers. It's important to put this one first before the offical line below //
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    // We have to manually create the rounded edges because the -webkit-clip-path overrides the border-radius and overflow: hidden //
+
+    &--1 {
+      background-image: linear-gradient(to right bottom, $color-secondary-light-1, $color-secondary-light-2), url(../img/nat-5.jpg);
+    }
+
+    &--2 {
+      background-image: linear-gradient(to right bottom, $color-primary-light, $color-primary-dark), url(../img/nat-6.jpg);
+    }
+
+    &--3 {
+      background-image: linear-gradient(to right bottom, $color-tertiary-light-1, $color-tertiary-light-2), url(../img/nat-7.jpg);
+    }
+  }
+
+  &__heading {
+    font-size: 2.8rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    text-align: right;
+    color: $color-white;
+    position: absolute;
+    top: 12rem;
+    right: 2rem;
+    width: 75%;
+    // This is to define the width of the heading //
+  }
+
+  &__heading-span {
+  // The reason that we don't nest this under the selector &__heading is that the class card__heading-span is not a child, it's a separate element //
+  padding: 1rem 1.5rem;
+  // This effectively makes the header shift over to the right and stack on top of itself //
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  // This applies the modifications to each box created //
+    &--1 {
+      background-image: linear-gradient(
+        to right bottom,
+        rgba($color-secondary-light-1, .85),
+        rgba($color-secondary-light-2, .85));
+    }
+    &--2 {
+      background-image: linear-gradient(
+        to right bottom,
+        rgba($color-primary-light, .85),
+        rgba($color-primary-dark, .85));
+    }
+    &--3 {
+      background-image: linear-gradient(
+        to right bottom,
+        rgba($color-tertiary-light-1, .85),
+        rgba($color-tertiary-light-2, .85));
+    }
+  }
+
+  &__details {
+    padding: 3rem;
+    // This ensures that the text isn't located on the left side //
+    ul{
+      list-style: none;
+      width: 80%;
+      // Makes sure that the underline doesn't go all the way across the card //
+      margin: 0 auto;
+      // This centers the block element within the block //
+
+      li{
+        text-align:center;
+        font-size: 1.5rem;
+        padding: 1rem;
+
+        &:not(:last-child) {
+          border-bottom: 1px solid $color-grey-light-2;
+        }
+      }
+    }
+  }
+
+  &__cta {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    // This centers the box //
+    width: 90%;
+    // This helps to make the button elongated instead of squashed //
+    text-align: center;
+  }
+
+  &__price-box {
+    text-align: center;
+    margin-bottom: 8rem;
+    color: $color-white;
+  }
+
+  &__price-only {
+    font-size: 1.4rem;
+    text-transform: uppercase;
+  }
+
+  &__price-value {
+    font-size: 6rem;
+    font-weight: 100;
+  }
+
+
+
+  // LARGE MEDIAQUERY //  
+  @media only screen and (max-width: 56.75em),
+          only screen and (hover: none) {
+
+    // we must include only screen and (hover: none) for those cases where the device has a large screen width but doesn't have a cursor, such as ipad in landscape mode or ipad pro in portrait mode //
+    height: auto;
+    box-shadow: $shadow-far;
+    background-color: $color-white;
+  
+    &__side {
+      color: $color-black;
+      font-size: 2rem;
+      height: auto;
+      position: relative;
+      box-shadow: none;
+  
+      &--back {
+        transform: rotateY(0);
+        -webkit-clip-path: polygon(0 15%, 100% 0, 100% 100%, 0 100%);
+        clip-path: polygon(0 15%, 100% 0, 100% 100%, 0 100%);
+        opacity: .75;
+      }
+    }
+    
+    &:hover &__side--front {
+      transform: rotateY(0);
+    }
+
+    // FRONT SIDE STYLING //
+    &__details {
+      padding: 1rem 2rem;
+    }
+
+    &__cta {
+      position: relative;
+      top: 0;
+      left: 0;
+      transform: translate(0);
+      // This centers the box //
+      width: 100%;
+      // This helps to make the button elongated instead of squashed //
+      padding: 7rem 4rem 4rem 4rem;
+      }
+  
+    &__price-box {
+      margin-bottom: 3rem;
+    }
+  
+    &__price-value {
+      font-size: 4rem;
+    }
+  }
+}
