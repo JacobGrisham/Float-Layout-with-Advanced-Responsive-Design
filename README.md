@@ -2,6 +2,9 @@
 ### Coding project from the Udemy Course [Advanced CSS and Sass: Flexbox, Grid, Animations, and more](https://www.udemy.com/course/advanced-css-and-sass/)
 I wrote the code in the sass directory and package.json. The other files were provided by the instructor.
 
+![AppDemo](img/appdemo.gif)
+![ResponsiveDemo](img/respdemo.gif)
+
 ## 💡Lessons Learned
 - CSS architecture with Sass
 - animations
