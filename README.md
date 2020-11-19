@@ -1,11 +1,9 @@
-# Natours: Float Layout with Advanced Responsive Design
+# [Natours: Float Layout with Advanced Responsive Design](https://jacobgrisham.github.io/Float-Layout-with-Advanced-Responsive-Design/)
 ### Coding project from the Udemy Course [Advanced CSS and Sass: Flexbox, Grid, Animations, and more](https://www.udemy.com/course/advanced-css-and-sass/)
 I wrote the code in the sass directory and package.json. The other files were provided by the instructor.
 
 App Demo
 ![AppDemo](img/appdemo.gif)
-
-
 
 Advanced Responsive Design
 ![ResponsiveDemo](img/respdemo.gif)
